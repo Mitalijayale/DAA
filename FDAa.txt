@@ -1,0 +1,475 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int knapSackRec(int W, int wt[], int val[], int index, int** dp)
+{
+	if (index < 0)
+		return 0;
+	if (dp[index][W] != -1)
+		return dp[index][W];
+
+	if (wt[index] > W) {
+
+		// Store the value of function call
+		// stack in table before return
+		dp[index][W] = knapSackRec(W, wt, val, index - 1, dp);
+		return dp[index][W];
+	}
+	else {
+		// Store value in a table before return
+		dp[index][W] = max(val[index]
+						+ knapSackRec(W - wt[index], wt, val,
+										index - 1, dp),
+					knapSackRec(W, wt, val, index - 1, dp));
+
+		// Return value of table after storing
+		return dp[index][W];
+	}
+}
+
+int knapSack(int W, int wt[], int val[], int n)
+{
+	// double pointer to declare the
+	// table dynamically
+	int** dp;
+	dp = new int*[n];
+
+	// loop to create the table dynamically
+	for (int i = 0; i < n; i++)
+		dp[i] = new int[W + 1];
+
+	// loop to initially filled the
+	// table with -1
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < W + 1; j++)
+		{
+			dp[i][j] = -1;
+		}
+	}		
+	return knapSackRec(W, wt, val, n - 1, dp);
+}
+
+// Driver Code
+int main()
+{
+    /*
+	int profit[] = { 60, 100, 120 };
+	int weight[] = { 10, 20, 30 };
+	int W = 50;
+	*/
+	
+	int o;
+	cout<<"enter number of items : ";
+	cin>>o;
+	int profit[o];
+	int weight[o];
+	
+	for(int i=0;i<o;i++)
+	{
+	    cout<<"enter profit : ";
+
+
+	    cin>>profit[i];
+	}
+	for(int i=0;i<o;i++)
+	{
+	    cout<<"enter weight : ";
+	    cin>>weight[i];
+	}
+	int W;
+	cout<<"Enter max weight of bag :";
+	cin>>W;
+	
+	int n = sizeof(profit) / sizeof(profit[0]);
+    int maxProfit = knapSack(W, weight, profit, n);
+
+    // Display the input details in a table format
+    cout << "Item\tWeight\tProfit\tRatio" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        double ratio = static_cast<double>(profit[i]) / weight[i];
+        cout << i + 1 << "\t" << weight[i] << "\t" << profit[i] << "\t" << fixed << setprecision(2) << ratio << endl;
+    }
+
+    cout << "Maximum Profit: " << maxProfit << endl;
+
+    return 0;
+}
+
+
+
+=======================================================================
+
+//fraction
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Item {
+    int weight;
+    int value;
+    double ratio; // Value-to-weight ratio
+};
+
+// Function to compare items based on their ratio (for sorting)
+bool compareItems(const Item &a, const Item &b) {
+    return a.ratio > b.ratio;
+}
+
+int main() {
+    int n; // Number of items
+    cout << "Enter the number of items: ";
+    cin >> n;
+
+    vector<Item> items(n);
+
+    // Input item weights and values
+    for (int i = 0; i < n; ++i) {
+        cout << "Enter the weight of item " << i + 1 << ": ";
+        cin >> items[i].weight;
+        cout << "Enter the value of item " << i + 1 << ": ";
+        cin >> items[i].value;
+        items[i].ratio = static_cast<double>(items[i].value) / items[i].weight;
+    }
+
+    // Sort items based on value-to-weight ratio in non-increasing order
+    sort(items.begin(), items.end(), compareItems);
+
+    int capacity; // Knapsack capacity
+    cout << "Enter the capacity of the knapsack: ";
+    cin >> capacity;
+
+    double maxProfit = 0.0;
+    vector<double> selected(n, 0.0); // Fraction of each item selected
+
+    // Fill the knapsack with items in greedy fashion
+    for (int i = 0; i < n; ++i) {
+        if (capacity == 0)
+            break;
+        
+        if (items[i].weight <= capacity) {
+            selected[i] = 1.0; // Take the whole item
+            maxProfit += items[i].value;
+            capacity -= items[i].weight;
+        } else {
+            selected[i] = static_cast<double>(capacity) / items[i].weight;
+            maxProfit += selected[i] * items[i].value;
+            capacity = 0;
+        }
+    }
+
+    // Display the results in table format
+    cout << "\nItem\tWeight\tValue\tRatio\tSelected Fraction\n";
+    for (int i = 0; i < n; ++i) {
+        cout << i + 1 << "\t" << items[i].weight << "\t" << items[i].value << "\t";
+        cout << items[i].ratio << "\t" << selected[i] << "\n";
+    }
+
+    cout << "\nMaximum Profit: " << maxProfit << endl;
+
+    return 0;
+}
+
+
+==========================================================
+
+//SOS
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> path;
+vector<int> subset;
+
+void findSubsets(int arr[], int sum, int n, int k, int targetSum) {
+    if (sum == targetSum) {
+        cout << "Subset: ";
+        for (int i = 0; i < path.size(); i++) {
+            cout << path[i] << " ";
+        }
+        cout << "=> Sum: " << targetSum << endl;
+    }
+
+    for (int i = k; i < n; i++) {
+        if (sum + arr[i] <= targetSum) {
+            path.push_back(arr[i]);
+            findSubsets(arr, sum + arr[i], n, i + 1, targetSum);
+            path.pop_back();
+        }
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int targetSum;
+    cout << "Enter the target sum: ";
+    cin >> targetSum;
+
+    cout << "Subsets with a sum of " << targetSum << ":" << endl;
+    findSubsets(arr, 0, n, 0, targetSum);
+
+    return 0;
+}
+
+===============================================================
+
+//tsp
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits> 
+using namespace std;
+
+const int INF = INT_MAX;
+
+int n;
+vector<vector<int>> graph;
+
+vector<int> path;
+vector<int> minPath;
+int minCost = INF;
+
+void tspBranchAndBound(int level, int cost, int mask) {
+    if (level == n) {
+        if (graph[path[level - 1]][0] != 0 && cost + graph[path[level - 1]][0] < minCost) {
+            minCost = cost + graph[path[level - 1]][0];
+            minPath = path;
+        }
+        return;
+    }
+
+    for (int city = 1; city < n; city++) {
+        if ((mask & (1 << city)) == 0 && graph[path[level - 1]][city] != 0) {
+            path[level] = city;
+            tspBranchAndBound(level + 1, cost + graph[path[level - 1]][city], mask | (1 << city));
+            path[level] = -1;
+        }
+    }
+}
+
+int main() {
+    cout << "Enter the number of cities: ";
+    cin >> n;
+
+    graph.resize(n, vector<int>(n));
+    path.resize(n);
+
+    cout << "Enter the adjacency matrix for the graph:" << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> graph[i][j];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        path[i] = -1;
+    }
+    path[0] = 0;
+
+    tspBranchAndBound(1, 0, 1);
+
+    cout << "Optimal TSP Tour: ";
+    for (int city : minPath) {
+        cout << city << " -> ";
+    }
+    cout << "0" << endl;
+
+    cout << "Minimum Cost: " << minCost << endl;
+
+    return 0;
+}
+
+/*
+Enter the number of cities: 4
+Enter the adjacency matrix for the graph:
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0
+Optimal TSP Tour: 0 -> 1 -> 3 -> 2 -> 0
+Minimum Cost: 80
+*/
+
+
+==============================================================
+
+//belmon 
+
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> bellman_ford(int V, vector<vector<int>> &edges, int S)
+{
+    vector<int> dist(V, 1e8);
+    dist[S] = 0;  
+
+    int c = V - 1;
+    while (c--)
+    {
+        for (auto it : edges)
+        {
+            int u = it[0];
+            int v = it[1];
+            int wt = it[2];
+            if (dist[u] != 1e8 and dist[u] + wt < dist[v])
+            {
+                dist[v] = dist[u] + wt;
+            }
+        }
+    }
+
+    for (auto it : edges)
+    {
+        int u = it[0];
+        int v = it[1];
+        int wt = it[2];
+        if (dist[u] != 1e8 and dist[u] + wt < dist[v])
+        {
+            return {-1};
+        }
+    }
+
+    return dist;
+    
+}
+
+int main()
+{
+
+    int n;
+    cout << "Enter the no of vertices in the graph: ";
+    cin >> n;
+    
+    int e;
+    cout << "Enter the no of edges in the graph: ";
+    cin >> e;
+
+    vector<vector<int>>edges;
+    for (int i = 0; i < e; i++)
+    {
+
+         int u, v, wt;
+        cin >> u >> v >> wt;
+        vector<int>temp={u,v,wt};
+        edges.push_back(temp);
+    }
+
+    vector<int> res =bellman_ford(n, edges,0);
+
+    cout << endl;
+    if (res.size() == 1 and res[0] == -1)
+    {
+        cout << "Cycle is present" << endl;
+    }
+    else
+    {
+
+        for (int i = 0; i < res.size(); i++)
+        {
+            cout << "0->" << i << " distance =" << res[i] << endl;
+        }
+        cout << endl;
+    }
+}
+
+================================================================
+
+//nqueen 
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+bool isSafe(vector<vector<int>>& board, int row, int col, int n) {
+    // Check the column on the left side
+    for (int i = 0; i < col; i++) {
+        if (board[row][i] == 1) {
+            return false;
+        }
+    }
+
+    // Check upper diagonal on the left side
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j] == 1) {
+            return false;
+        }
+    }
+
+    // Check lower diagonal on the left side
+    for (int i = row, j = col; i < n && j >= 0; i++, j--) {
+        if (board[i][j] == 1) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool solveNQueens(vector<vector<int>>& board, int col, int n) {
+    if (col >= n) {
+        return true; // All queens are placed successfully
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (isSafe(board, i, col, n)) {
+            // Place a queen at this cell
+            board[i][col] = 1;
+
+            // Recur to place queens in the next columns
+            if (solveNQueens(board, col + 1, n)) {
+                return true;
+            }
+
+            // If placing a queen in this cell doesn't lead to a solution,
+            // then backtrack and remove the queen from this cell
+            board[i][col] = 0;
+        }
+    }
+
+    // If all rows have been tried and none worked, return false
+    return false;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of queens (N): ";
+    cin >> n;
+
+    vector<vector<int>> board(n, vector<int>(n, 0));
+
+    if (solveNQueens(board, 0, n)) {
+        cout << "Solution found:" << endl;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 1) {
+                    cout << "Q ";
+                } else {
+                    cout << ". ";
+                }
+            }
+            cout << endl;
+        }
+    } else {
+        cout << "No solution found." << endl;
+    }
+
+    return 0;
+}
