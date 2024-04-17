@@ -1,41 +1,41 @@
-N queen 
+ITS ME ALL THE BEST : .......................N queen
 
 #include <iostream>
-using namespace std;
+                      using namespace std;
 
-class nqueen 
+class nqueen
 {
 public:
-    bool check(int** arr, int row, int col, int n);
-    bool solve_nqueen(int** arr, int col, int n);
+    bool check(int **arr, int row, int col, int n);
+    bool solve_nqueen(int **arr, int col, int n);
 };
 
-bool nqueen::check(int** arr, int row, int col, int n) 
+bool nqueen::check(int **arr, int row, int col, int n)
 {
     int i, j;
 
     // Check row on the left side
-    for (i = 0; i < col; i++) 
+    for (i = 0; i < col; i++)
     {
-        if (arr[row][i]) 
+        if (arr[row][i])
         {
             return false;
         }
     }
 
     // Check upper diagonal on the left side
-    for (i = row, j = col; i >= 0 && j >= 0; i--, j--) 
+    for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
     {
-        if (arr[i][j]) 
+        if (arr[i][j])
         {
             return false;
         }
     }
 
     // Check lower diagonal on the left side
-    for (i = row, j = col; j >= 0 && i < n; i++, j--) 
+    for (i = row, j = col; j >= 0 && i < n; i++, j--)
     {
-        if (arr[i][j]) 
+        if (arr[i][j])
         {
             return false;
         }
@@ -45,10 +45,10 @@ bool nqueen::check(int** arr, int row, int col, int n)
     return true;
 }
 
-bool nqueen::solve_nqueen(int** arr, int col, int n) 
+bool nqueen::solve_nqueen(int **arr, int col, int n)
 {
     // To check if all queens are placed
-    if (col >= n) 
+    if (col >= n)
     {
         cout << "----------------------------------------------------------------\n";
         cout << "ALL QUEENS ARE PLACED\n ";
@@ -57,24 +57,24 @@ bool nqueen::solve_nqueen(int** arr, int col, int n)
         return true;
     }
 
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i < n; i++)
     {
-        if (check(arr, i, col, n)) 
+        if (check(arr, i, col, n))
         {
             arr[i][col] = 1;
 
             // Displaying placed queens
             cout << "----------------------------------------------------------------\n";
 
-            for (int k = 0; k < n; k++) 
+            for (int k = 0; k < n; k++)
             {
-                for (int l = 0; l < n; l++) 
+                for (int l = 0; l < n; l++)
                 {
-                    if (arr[k][l] == 1) 
+                    if (arr[k][l] == 1)
                     {
                         cout << "q" << l + 1 << "\t";
-                    } 
-                    else 
+                    }
+                    else
                     {
                         cout << "0\t";
                     }
@@ -84,7 +84,7 @@ bool nqueen::solve_nqueen(int** arr, int col, int n)
             cout << "----------------------------------------------------------------\n";
 
             // Iterate to the next column
-            if (solve_nqueen(arr, col + 1, n)) 
+            if (solve_nqueen(arr, col + 1, n))
             {
                 return true;
             }
@@ -99,7 +99,7 @@ bool nqueen::solve_nqueen(int** arr, int col, int n)
     return false;
 }
 
-int main() 
+int main()
 {
     nqueen q1;
 rep:
@@ -108,21 +108,21 @@ rep:
     cin >> n;
     cout << "----------------------------------------------------------------\n";
 
-    if (n <= 3) 
+    if (n <= 3)
     {
         cout << "Please enter a size greater than 3:\n";
         cout << "----------------------------------------------------------------\n";
         goto rep;
     }
 
-    int** arr = new int*[n];
+    int **arr = new int *[n];
 
     cout << "Initially the board is:\n";
     // Initially setting value to 0
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i < n; i++)
     {
         arr[i] = new int[n];
-        for (int j = 0; j < n; j++) 
+        for (int j = 0; j < n; j++)
         {
             arr[i][j] = 0;
             cout << "0\t";
@@ -136,15 +136,15 @@ rep:
     cout << "----------------------------------------------------------------\n";
 
     cout << "AFTER PLACING THE QUEEN: \n";
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i < n; i++)
     {
-        for (int k = 0; k < n; k++) 
+        for (int k = 0; k < n; k++)
         {
-            if (arr[i][k] == 1) 
+            if (arr[i][k] == 1)
             {
                 cout << "q" << k + 1 << "\t";
-            } 
-            else 
+            }
+            else
             {
                 cout << "0\t";
             }
@@ -156,25 +156,25 @@ rep:
     return 0;
 }
 
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == =
 
-
-===============================================================================================
-
-Belmon Ford 
+                                                                                                                                                 Belmon Ford
 
 #include <iostream>
 #include <vector>
 #include <climits>
 #include <chrono>
-using namespace std;
+    using namespace std;
 
 const int INF = INT_MAX;
 
-struct Edge {
+struct Edge
+{
     int src, dest, weight;
 };
 
-class BellmanFord {
+class BellmanFord
+{
 public:
     BellmanFord(int vertices);
     void addEdge(int src, int dest, int weight);
@@ -192,23 +192,28 @@ private:
     void printPath(int vertex);
 };
 
-BellmanFord::BellmanFord(int vertices) {
+BellmanFord::BellmanFord(int vertices)
+{
     V = vertices;
     distance.resize(V, INF);
     predecessor.resize(V, -1);
 }
 
-void BellmanFord::addEdge(int src, int dest, int weight) {
+void BellmanFord::addEdge(int src, int dest, int weight)
+{
     Edge edge = {src, dest, weight};
     edges.push_back(edge);
 }
 
-void BellmanFord::initialize(int startVertex) {
+void BellmanFord::initialize(int startVertex)
+{
     distance[startVertex] = 0;
 }
 
-bool BellmanFord::relaxEdge(Edge edge) {
-    if (distance[edge.src] != INF && distance[edge.src] + edge.weight < distance[edge.dest]) {
+bool BellmanFord::relaxEdge(Edge edge)
+{
+    if (distance[edge.src] != INF && distance[edge.src] + edge.weight < distance[edge.dest])
+    {
         distance[edge.dest] = distance[edge.src] + edge.weight;
         predecessor[edge.dest] = edge.src;
         return true;
@@ -216,36 +221,45 @@ bool BellmanFord::relaxEdge(Edge edge) {
     return false;
 }
 
-void BellmanFord::findShortestPath(int startVertex) {
+void BellmanFord::findShortestPath(int startVertex)
+{
     initialize(startVertex);
 
-    for (int i = 1; i < V; i++) {
-        for (Edge edge : edges) {
+    for (int i = 1; i < V; i++)
+    {
+        for (Edge edge : edges)
+        {
             relaxEdge(edge);
         }
     }
 
-    for (Edge edge : edges) {
-        if (relaxEdge(edge)) {
+    for (Edge edge : edges)
+    {
+        if (relaxEdge(edge))
+        {
             cout << "Negative-weight cycle detected. Bellman-Ford algorithm cannot guarantee shortest paths." << endl;
             return;
         }
     }
 
     cout << "Vertex\tDistance\tPath" << endl;
-    for (int i = 0; i < V; i++) {
+    for (int i = 0; i < V; i++)
+    {
         cout << i << "\t" << distance[i] << "\t\t";
         printPath(i);
         cout << endl;
     }
 }
 
-void BellmanFord::printPath(int vertex) {
-    if (distance[vertex] == 0) {
+void BellmanFord::printPath(int vertex)
+{
+    if (distance[vertex] == 0)
+    {
         cout << vertex;
         return;
     }
-    if (predecessor[vertex] == -1) {
+    if (predecessor[vertex] == -1)
+    {
         cout << "No path exists";
         return;
     }
@@ -253,7 +267,8 @@ void BellmanFord::printPath(int vertex) {
     cout << " -> " << vertex;
 }
 
-int main() {
+int main()
+{
     int vertices, edges;
     cout << "Enter the number of vertices: ";
     cin >> vertices;
@@ -262,7 +277,8 @@ int main() {
 
     BellmanFord graph(vertices);
 
-    for (int i = 0; i < edges; i++) {
+    for (int i = 0; i < edges; i++)
+    {
         int src, dest, weight;
         cout << "Enter edge " << i + 1 << " (source destination weight): ";
         cin >> src >> dest >> weight;
@@ -283,11 +299,9 @@ int main() {
     return 0;
 }
 
-
-
 /*
 Enter the number of vertices: 5 8
-Enter the number of edges: Enter edge 1 (source destination weight): 0 1 6  
+Enter the number of edges: Enter edge 1 (source destination weight): 0 1 6
 Enter edge 2 (source destination weight): 0 2 7
 Enter edge 3 (source destination weight): 1 2 8
 Enter edge 4 (source destination weight): 1 3 -4
@@ -305,29 +319,33 @@ Vertex  Distance        Path
 Execution time: 0.007381 seconds
 */
 
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 
-======================================================================================================
-
-SUM OF SUBSET 
+    SUM OF SUBSET
 
 #include <iostream>
 #include <vector>
-using namespace std;
+    using namespace std;
 
 vector<int> path;
 vector<int> subset;
 
-void findSubsets(int arr[], int sum, int n, int k, int targetSum) {
-    if (sum == targetSum) {
+void findSubsets(int arr[], int sum, int n, int k, int targetSum)
+{
+    if (sum == targetSum)
+    {
         cout << "Subset: ";
-        for (int i = 0; i < path.size(); i++) {
+        for (int i = 0; i < path.size(); i++)
+        {
             cout << path[i] << " ";
         }
         cout << "=> Sum: " << targetSum << endl;
     }
 
-    for (int i = k; i < n; i++) {
-        if (sum + arr[i] <= targetSum) {
+    for (int i = k; i < n; i++)
+    {
+        if (sum + arr[i] <= targetSum)
+        {
             path.push_back(arr[i]);
             findSubsets(arr, sum + arr[i], n, i + 1, targetSum);
             path.pop_back();
@@ -335,14 +353,16 @@ void findSubsets(int arr[], int sum, int n, int k, int targetSum) {
     }
 }
 
-int main() {
+int main()
+{
     int n;
     cout << "Enter the number of elements: ";
     cin >> n;
 
     int arr[n];
     cout << "Enter the elements: ";
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         cin >> arr[i];
     }
 
@@ -356,16 +376,15 @@ int main() {
     return 0;
 }
 
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 
-============================================================================
-
-TSP
+    TSP
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <climits> 
-using namespace std;
+#include <climits>
+    using namespace std;
 
 const int INF = INT_MAX;
 
@@ -376,17 +395,22 @@ vector<int> path;
 vector<int> minPath;
 int minCost = INF;
 
-void tspBranchAndBound(int level, int cost, int mask) {
-    if (level == n) {
-        if (graph[path[level - 1]][0] != 0 && cost + graph[path[level - 1]][0] < minCost) {
+void tspBranchAndBound(int level, int cost, int mask)
+{
+    if (level == n)
+    {
+        if (graph[path[level - 1]][0] != 0 && cost + graph[path[level - 1]][0] < minCost)
+        {
             minCost = cost + graph[path[level - 1]][0];
             minPath = path;
         }
         return;
     }
 
-    for (int city = 1; city < n; city++) {
-        if ((mask & (1 << city)) == 0 && graph[path[level - 1]][city] != 0) {
+    for (int city = 1; city < n; city++)
+    {
+        if ((mask & (1 << city)) == 0 && graph[path[level - 1]][city] != 0)
+        {
             path[level] = city;
             tspBranchAndBound(level + 1, cost + graph[path[level - 1]][city], mask | (1 << city));
             path[level] = -1;
@@ -394,7 +418,8 @@ void tspBranchAndBound(int level, int cost, int mask) {
     }
 }
 
-int main() {
+int main()
+{
     cout << "Enter the number of cities: ";
     cin >> n;
 
@@ -402,13 +427,16 @@ int main() {
     path.resize(n);
 
     cout << "Enter the adjacency matrix for the graph:" << endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
             cin >> graph[i][j];
         }
     }
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         path[i] = -1;
     }
     path[0] = 0;
@@ -416,7 +444,8 @@ int main() {
     tspBranchAndBound(1, 0, 1);
 
     cout << "Optimal TSP Tour: ";
-    for (int city : minPath) {
+    for (int city : minPath)
+    {
         cout << city << " -> ";
     }
     cout << "0" << endl;
@@ -437,93 +466,92 @@ Optimal TSP Tour: 0 -> 1 -> 3 -> 2 -> 0
 Minimum Cost: 80
 */
 
-
 01
 
 #include <bits/stdc++.h>
-using namespace std;
+    using namespace std;
 
-int knapSackRec(int W, int wt[], int val[], int index, int** dp)
+int knapSackRec(int W, int wt[], int val[], int index, int **dp)
 {
-	if (index < 0)
-		return 0;
-	if (dp[index][W] != -1)
-		return dp[index][W];
+    if (index < 0)
+        return 0;
+    if (dp[index][W] != -1)
+        return dp[index][W];
 
-	if (wt[index] > W) {
+    if (wt[index] > W)
+    {
 
-		// Store the value of function call
-		// stack in table before return
-		dp[index][W] = knapSackRec(W, wt, val, index - 1, dp);
-		return dp[index][W];
-	}
-	else {
-		// Store value in a table before return
-		dp[index][W] = max(val[index]
-						+ knapSackRec(W - wt[index], wt, val,
-										index - 1, dp),
-					knapSackRec(W, wt, val, index - 1, dp));
+        // Store the value of function call
+        // stack in table before return
+        dp[index][W] = knapSackRec(W, wt, val, index - 1, dp);
+        return dp[index][W];
+    }
+    else
+    {
+        // Store value in a table before return
+        dp[index][W] = max(val[index] + knapSackRec(W - wt[index], wt, val,
+                                                    index - 1, dp),
+                           knapSackRec(W, wt, val, index - 1, dp));
 
-		// Return value of table after storing
-		return dp[index][W];
-	}
+        // Return value of table after storing
+        return dp[index][W];
+    }
 }
 
 int knapSack(int W, int wt[], int val[], int n)
 {
-	// double pointer to declare the
-	// table dynamically
-	int** dp;
-	dp = new int*[n];
+    // double pointer to declare the
+    // table dynamically
+    int **dp;
+    dp = new int *[n];
 
-	// loop to create the table dynamically
-	for (int i = 0; i < n; i++)
-		dp[i] = new int[W + 1];
+    // loop to create the table dynamically
+    for (int i = 0; i < n; i++)
+        dp[i] = new int[W + 1];
 
-	// loop to initially filled the
-	// table with -1
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < W + 1; j++)
-		{
-			dp[i][j] = -1;
-		}
-	}		
-	return knapSackRec(W, wt, val, n - 1, dp);
+    // loop to initially filled the
+    // table with -1
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < W + 1; j++)
+        {
+            dp[i][j] = -1;
+        }
+    }
+    return knapSackRec(W, wt, val, n - 1, dp);
 }
 
 // Driver Code
 int main()
 {
     /*
-	int profit[] = { 60, 100, 120 };
-	int weight[] = { 10, 20, 30 };
-	int W = 50;
-	*/
-	
-	int o;
-	cout<<"enter number of items : ";
-	cin>>o;
-	int profit[o];
-	int weight[o];
-	
-	for(int i=0;i<o;i++)
-	{
-	    cout<<"enter profit : ";
+    int profit[] = { 60, 100, 120 };
+    int weight[] = { 10, 20, 30 };
+    int W = 50;
+    */
 
+    int o;
+    cout << "enter number of items : ";
+    cin >> o;
+    int profit[o];
+    int weight[o];
 
-	    cin>>profit[i];
-	}
-	for(int i=0;i<o;i++)
-	{
-	    cout<<"enter weight : ";
-	    cin>>weight[i];
-	}
-	int W;
-	cout<<"Enter max weight of bag :";
-	cin>>W;
-	
-	int n = sizeof(profit) / sizeof(profit[0]);
+    for (int i = 0; i < o; i++)
+    {
+        cout << "enter profit : ";
+
+        cin >> profit[i];
+    }
+    for (int i = 0; i < o; i++)
+    {
+        cout << "enter weight : ";
+        cin >> weight[i];
+    }
+    int W;
+    cout << "Enter max weight of bag :";
+    cin >> W;
+
+    int n = sizeof(profit) / sizeof(profit[0]);
     int maxProfit = knapSack(W, weight, profit, n);
 
     // Display the input details in a table format
@@ -539,26 +567,29 @@ int main()
     return 0;
 }
 
-fractnol 
+fractnol
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
-using namespace std;
+    using namespace std;
 
-struct Item {
+struct Item
+{
     int weight;
     int value;
     double ratio; // Value-to-weight ratio
 };
 
 // Function to compare items based on their ratio (for sorting)
-bool compareItems(const Item &a, const Item &b) {
+bool compareItems(const Item &a, const Item &b)
+{
     return a.ratio > b.ratio;
 }
 
-int main() {
+int main()
+{
     int n; // Number of items
     cout << "Enter the number of items: ";
     cin >> n;
@@ -566,7 +597,8 @@ int main() {
     vector<Item> items(n);
 
     // Input item weights and values
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         cout << "Enter the weight of item " << i + 1 << ": ";
         cin >> items[i].weight;
         cout << "Enter the value of item " << i + 1 << ": ";
@@ -585,15 +617,19 @@ int main() {
     vector<double> selected(n, 0.0); // Fraction of each item selected
 
     // Fill the knapsack with items in greedy fashion
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         if (capacity == 0)
             break;
-        
-        if (items[i].weight <= capacity) {
+
+        if (items[i].weight <= capacity)
+        {
             selected[i] = 1.0; // Take the whole item
             maxProfit += items[i].value;
             capacity -= items[i].weight;
-        } else {
+        }
+        else
+        {
             selected[i] = static_cast<double>(capacity) / items[i].weight;
             maxProfit += selected[i] * items[i].value;
             capacity = 0;
@@ -602,7 +638,8 @@ int main() {
 
     // Display the results in table format
     cout << "\nItem\tWeight\tValue\tRatio\tSelected Fraction\n";
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         cout << i + 1 << "\t" << items[i].weight << "\t" << items[i].value << "\t";
         cout << items[i].ratio << "\t" << selected[i] << "\n";
     }
@@ -611,26 +648,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
